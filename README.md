@@ -165,4 +165,6 @@ Cite the **exact dataset versions used**, not only this repository. In particula
 
 ## 10. License
 
-MIT for **repository source code only**, subject to final contributor approval. Upstream datasets, images and proprietary material retain their respective owners' rights; nothing in the MIT source-code license re-licenses third-party datasets.
+The source code in this repository is released under the MIT License. See the LICENSE file for details.
+
+Third-party datasets, including GIMMS LAI4g, GLEAM, ERA5-Land, TerraClimate, and PML-V2.2b, are subject to their respective data access and licensing terms. These datasets are not redistributed under the MIT License.
