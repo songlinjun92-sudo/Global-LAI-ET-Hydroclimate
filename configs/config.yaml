@@ -1,0 +1,74 @@
+# Copy to configs/config.yaml. No paths here refer to a particular computer.
+# Relative filenames are resolved from the repository root.
+period:
+  start: 1982
+  end: 2020
+  require_balanced: true
+
+inputs:
+  annual_panel: data/processed/annual_panel.csv.gz
+  pixel_attributes: data/processed/pixel_attributes.csv
+  # Set this after running prepare-pml, or use a separately harmonized annual PML table.
+  pml_panel: data/processed/pml_panel.csv.gz
+
+outputs:
+  directory: outputs/publication_run
+
+predictors: [LAI_gs, Ta_ann, P_ann, Rs_ann, VPD_ann]
+targets: {ET: ET_ann, T: T_ann, Ei: Ei_ann, Eb: Eb_ann}
+pml_pairs: {ET: PML_ET, T: PML_Ec, Ei: PML_Ei, Eb: PML_Es}
+
+model:
+  trees: 250
+  cv_trees: 100
+  n_jobs: 2
+  train_cap: 150000        # 0 means fit on every valid matched grid-year; document changes.
+  cv_folds: 5
+  min_samples_leaf: 2
+  seed: 202610
+  skip_cv: false
+  do_shap: false           # optional: install pip extras [shap] to enable
+  shap_sample: 200
+
+ice:
+  q_low: 0.05
+  q_high: 0.95
+  points: 20
+  minimum_range: 0.10
+  batch_pixels: 128
+
+statistics:
+  block_degrees: 10
+  bootstrap_replicates: 2000
+  min_pft_pixels: 30
+  min_pft_blocks: 8
+  seed: 1234
+
+temporal:
+  enabled: false           # optional finite difference, distinct estimand from ICE
+  step: 0.05
+
+# Optional: create harmonized annual panel from TIFFs, one per year and variable.
+# Input TIFFs must ALREADY be EPSG:4326 180x360 aligned to the exact 1-degree grid.
+raster_inputs:
+  annual:
+    # LAI_gs: data/raw/lai_gs_{year}.tif
+    # ET_ann: data/raw/gleam_et_{year}.tif
+    # T_ann: data/raw/gleam_t_{year}.tif
+    # Ei_ann: data/raw/gleam_ei_{year}.tif
+    # Eb_ann: data/raw/gleam_eb_{year}.tif
+    # Ta_ann: data/raw/ta_{year}.tif
+    # P_ann: data/raw/p_{year}.tif
+    # Rs_ann: data/raw/rs_{year}.tif
+    # VPD_ann: data/raw/vpd_{year}.tif
+  pixel:
+    # PFT: data/raw/pft_1deg.tif
+    # P_ERA: data/raw/p_era_mean.tif
+    # Ep_GLEAM: data/raw/gleam_ep_mean.tif
+    # PET_Terra: data/raw/terraclimate_pet_mean.tif
+    # P_Terra: data/raw/terraclimate_precip_mean.tif
+
+pml_netcdf:
+  root: data/raw/pml_annual
+  start_year: 1982
+  end_year: 2020
