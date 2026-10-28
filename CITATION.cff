@@ -3,8 +3,8 @@ message: "Please cite this software and the corresponding manuscript when using 
 title: "Global LAI–ET hydroclimatic sensitivity analysis code"
 type: software
 version: 0.1.0
-date-released: 2026-10-25
 license: MIT
-# Replace with the final author names and repository URL before the public release.
+repository-code: "https://github.com/songlinjun92-sudo/Global-LAI-ET-Hydroclimate"
+url: "https://github.com/songlinjun92-sudo/Global-LAI-ET-Hydroclimate"
 authors:
   - name: "Linjun Song"
